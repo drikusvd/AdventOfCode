@@ -6,6 +6,7 @@ using AdventOfCode2022.Day5;
 using AdventOfCode2022.Day6;
 using AdventOfCode2022.Day7;
 using AdventOfCode2022.Day8;
+using AdventOfCode2022.Day9;
 
 await new Day1Processor().Process();
 await new Day2Processor().Process();
@@ -15,6 +16,6 @@ await new Day5Processor().Process();
 await new Day6Processor().Process();
 await new Day7Processor().Process();
 await new Day8Processor().Process();
-
+await new Day9Processor().Process();
 
 Console.ReadKey();
