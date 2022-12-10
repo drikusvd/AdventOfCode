@@ -1,21 +1,17 @@
-﻿using AdventOfCode2022.Day1;
-using AdventOfCode2022.Day2;
-using AdventOfCode2022.Day3;
-using AdventOfCode2022.Day4;
-using AdventOfCode2022.Day5;
-using AdventOfCode2022.Day6;
-using AdventOfCode2022.Day7;
-using AdventOfCode2022.Day8;
-using AdventOfCode2022.Day9;
+﻿using System.Reflection;
+using AdventOfCode2022;
 
-await new Day1Processor().Process();
-await new Day2Processor().Process();
-await new Day3Processor().Process();
-await new Day4Processor().Process();
-await new Day5Processor().Process();
-await new Day6Processor().Process();
-await new Day7Processor().Process();
-await new Day8Processor().Process();
-await new Day9Processor().Process();
+var baseType = typeof(ProcessorBase);
+var processors = Assembly.GetEntryAssembly().GetTypes().Where(a => a.IsSubclassOf(baseType)).ToList();
+processors.Sort((a, b) =>
+{
+    var aDay = int.Parse(a.Namespace.Substring(a.Namespace.LastIndexOf(".") + 1).Replace("Day", ""));
+    var bDay = int.Parse(b.Namespace.Substring(b.Namespace.LastIndexOf(".") + 1).Replace("Day", ""));
 
-Console.ReadKey();
+    return aDay - bDay;
+});
+
+foreach (var processor in processors)
+{
+    await ((ProcessorBase)Activator.CreateInstance(processor)).Process();
+}
