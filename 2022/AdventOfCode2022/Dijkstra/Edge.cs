@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode2022.Day12.Dijkstra;
+﻿namespace AdventOfCode2022.Dijkstra;
 
 //Adapted from https://www.codeproject.com/Articles/1221034/Pathfinding-Algorithms-in-Csharp
 public class Edge

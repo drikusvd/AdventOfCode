@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using AdventOfCode2022.Day12.Dijkstra;
+using AdventOfCode2022.Dijkstra;
 
 namespace AdventOfCode2022.Day12;
 
@@ -19,11 +19,6 @@ public class Day12Processor: ProcessorBase
         var shortest = 10000;
         foreach (var startNode in startNodes)
         {
-            foreach (var node in allNodes)
-            {
-                node.Reinit();
-            }
-            
             var shortestRoute = DijkstraShortestPath.GetShortestPath(startNode, endNode);
             var steps = shortestRoute.Count - 1;
             //Console.WriteLine($"{(steps == 0 ? "Infinite" : steps.ToString())} steps from {startNode.Id} to E");
@@ -50,18 +45,18 @@ public class Day12Processor: ProcessorBase
                 var node = new Node()
                 {
                     Point = new Point(x, y),
-                    Elevation = elevation
+                    Name = elevation.ToString() //name contains elevation
                 };
                 allNodes.Add(node);
                 if (allowedStartingElevations.Contains(elevation))
                 {
                     startNodes.Add(node);
-                    node.Elevation = 'a';
+                    node.Name = "a"; //name contains elevation
                 } 
                 else if (elevation == 'E')
                 {
                     endNode = node;
-                    node.Elevation = 'z';
+                    node.Name = "z"; //name contains elevation
                 }
 
                 //check for neighbours
@@ -93,9 +88,9 @@ public class Day12Processor: ProcessorBase
 
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.Elevation > currentNode.Elevation)
+                if (neighbour.Name[0] > currentNode.Name[0]) //name contains elevation
                 {
-                    var dist = neighbour.Elevation - currentNode.Elevation;
+                    var dist = neighbour.Name[0] - currentNode.Name[0]; //name contains elevation
                     if (dist == 1)
                     {
                         //not too high, can go to the neighbour
@@ -123,7 +118,7 @@ public class Day12Processor: ProcessorBase
                     };
                     currentNode.Edges.Add(toNeighbourEdge);
 
-                    var dist = currentNode.Elevation - neighbour.Elevation;
+                    var dist = currentNode.Name[0] - neighbour.Name[0]; //name contains elevation
                     if (dist <= 1)
                     {
                         //not too high, can come from the neighbour
